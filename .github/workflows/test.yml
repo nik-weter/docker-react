@@ -1,0 +1,16 @@
+jobs:
+  # Имя действия, придумываем сами
+  integration-tests:
+    # На какой ОС будет работать виртуальная машина
+    # Можно выбрать Ubuntu, Windows Server или macOS
+    runs-on: ubuntu-latest
+    # Шаги действия
+    steps:
+      # Шаг 1: собираем сервисы в режиме тестирования
+#      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker build -t nik-weter/docker-react -f Dockerfile.dev .
+ 
+      # Шаг 2: собираем проект с тестами
+      - name: Build tests
+        run: docker run -e CI=true nik-weter/docker-react npm run test
