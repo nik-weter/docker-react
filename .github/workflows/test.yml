@@ -1,5 +1,5 @@
+name: .test
 jobs:
-  # Имя действия, придумываем сами
   integration-tests:
     # На какой ОС будет работать виртуальная машина
     # Можно выбрать Ubuntu, Windows Server или macOS
