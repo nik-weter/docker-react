@@ -14,3 +14,6 @@ jobs:
       # Шаг 2: собираем проект с тестами
       - name: Build tests
         run: docker run -e CI=true nik-weter/docker-react npm run test
+  deploy:
+    steps:
+    
