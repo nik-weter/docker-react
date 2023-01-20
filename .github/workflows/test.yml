@@ -36,6 +36,8 @@ jobs:
       name: deploy to server
       runs-on: ubuntu-latest
       steps:
+          - name: Adding Known Hosts
+            run: echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
           - name: Deploy app
             uses: appleboy/ssh-action@master
             with:
@@ -44,4 +46,4 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: ${{ secrets.SSH_PORT }}
               script: |
-                ssh root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
+                ssh root@riss.fabrika-start.ru "docker run -p 3000:3000 nikweter/docker-react:latest"
