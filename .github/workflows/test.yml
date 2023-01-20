@@ -36,22 +36,12 @@ jobs:
       name: deploy to server
       runs-on: ubuntu-latest
       steps:
-          - name: Install SSH Key
-            uses: shimataro/ssh-key-action@v2
-            with:
-              key: ${{ secrets.SSH_PRIVATE_KEY }}
-              known_hosts: unnecessary
-
-          - name: Adding Known Hosts
-            run: |
-              echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
-              cat ~/.ssh/known_hosts
           - name: Deploy app
             uses: appleboy/ssh-action@master
             with:
-              host: ${{ secrets.SSH_HOST }}
-              username: ${{ secrets.SSH_USER }}
+              host: riss.fabrika-start.ru
+              username: root
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              port: ${{ secrets.SSH_PORT }}
+              port: 22
               script: |
-                ssh root@riss.fabrika-start.ru "docker run -p 3000:3000 nikweter/docker-react:latest"
+                docker run -p 3000:3000 nikweter/docker-react:latest
