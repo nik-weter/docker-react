@@ -44,4 +44,4 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               port: 22
               script: |
-                docker run -p 3000:3000 nikweter/docker-react:latest
+                docker run -p 3000:80 nikweter/docker-react:latest
