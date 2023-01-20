@@ -43,7 +43,9 @@ jobs:
               known_hosts: unnecessary
 
           - name: Adding Known Hosts
-            run: echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
+            run: |
+              echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
+              cat ~/.ssh/known_hosts
           - name: Deploy app
             uses: appleboy/ssh-action@master
             with:
