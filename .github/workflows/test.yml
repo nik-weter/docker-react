@@ -50,4 +50,5 @@ jobs:
 
           - name: Deploy
             run: |
+              echo $SSH_KEY_PATH
               ssh -i $SSH_KEY_PATH root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
