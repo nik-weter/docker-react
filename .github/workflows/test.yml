@@ -33,18 +33,15 @@ jobs:
 #              tags: nikweter/docker-react:latest
 
     deploy:
-        name: Deploy to remote server
-        runs-on: ubuntu-latest
-        steps:
-          - name: Create SSH key
-            uses: shimataro/ssh-key-action@v2
+      name: deploy to server
+      runs-on: ubuntu-latest
+      steps:
+          - name: Restart Node Server
+            uses: appleboy/ssh-action@master
             with:
-              key: ${{ secrets.SSH_PRIVATE_KEY }} 
-              known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-          - name: Adding Known Hosts
-            run: echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-          - name: Deploy
-            run: |
-              echo $SSH_KEY_PATH
-              ssh root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
+              host: ${{ secrets.SSH_HOST }}
+              username: ${{ secrets.SSH_USER }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              port: ${{ secrets.SSH_PORT }}
+              script: |
+                ssh root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
