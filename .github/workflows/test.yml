@@ -37,18 +37,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Create SSH key
-            run: |
-              mkdir -p ~/.ssh/
-              echo "$SSH_PRIVATE_KEY" > private.key
-              sudo chmod 600 private.key
-              echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-            shell: bash
-            env:
-              SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-              SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-              SSH_KEY_PATH: ${{ github.workspace }}/private.key
+            uses: shimataro/ssh-key-action@v2
+            with:
+              key: ${{ secrets.SSH_PRIVATE_KEY }} 
+              known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          - name: Adding Known Hosts
+            run: echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
           - name: Deploy
             run: |
               echo $SSH_KEY_PATH
-              ssh -i $SSH_KEY_PATH root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
+              ssh root@riss.fabrika-start.ru  "docker run -p 3000:3000 nikweter/docker-react:latest"
